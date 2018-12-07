@@ -15,8 +15,6 @@ services:
     container_name: sfw_tomcat ## 수정시 httpd/worker.properties 도 같이 수정해주세요.
     expose:
       - "8009"
-    volumes:
-      - ./test:/usr/local/tomcat/webapps/ROOT
     build: tomcat/.
   httpd:
     container_name: sfw_httpd

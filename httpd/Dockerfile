@@ -1,4 +1,4 @@
-FROM ubuntu:latest
+FROM ubuntu:16.04
 
 MAINTAINER tmdgus0118@gmail.com
 
@@ -12,8 +12,7 @@ ADD worker.properties /etc/libapache2-mod-jk/workers.properties
 
 ADD jk.conf /etc/apache2/mods-available/jk.conf
 
-
-VOLUME ["/var/log/apache2"]
+COPY dist/ /var/www/html
 
 EXPOSE 80 443
 

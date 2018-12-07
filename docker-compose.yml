@@ -1,0 +1,28 @@
+version: '2'
+services:
+  db:
+    container_name: sfw_mysql ## 수정시 application.properties, entrypoint.sh 도 같이 수정해주세요.
+    build: mysql/.
+    volumes:
+      - ./mysql/logs:/var/log/mysql
+      - ./mysql/volumes:/var/lib/mysql
+    expose:
+      - "3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=a1234567@
+      - MYSQL_PORT=3306
+  web:
+    container_name: sfw_tomcat ## 수정시 httpd/worker.properties 도 같이 수정해주세요.
+    expose:
+      - "8009"
+    volumes:
+      - ./test:/usr/local/tomcat/webapps/ROOT
+    build: tomcat/.
+  httpd:
+    container_name: sfw_httpd
+    volumes:
+      - ./httpd/logs:/var/log/apache2
+    ports:
+      - "80:80"
+    build: httpd/.
+    

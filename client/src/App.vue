@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <h1>도시별 미세먼지 데이터</h1>
+    <h2>시도별 미세먼지 데이터</h2>
     <line-chart/>
   </div>
 </template>

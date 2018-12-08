@@ -35,17 +35,6 @@ public class StatController {
 		return dRepos.list(c.getTime(), to);
 	}
 	
-	@GetMapping("get/weekly")
-	public List<DailyStatInfo> getWeekly() {
-		Date to = new Date();
-		Calendar c = Calendar.getInstance();
-		
-		c.setTime(new Date());
-		c.add(Calendar.DATE, -7);
-		return dRepos.list(c.getTime(), to);
-		
-	}
-	
 	@GetMapping("get/hour")
 	public List<HourStatInfo> getHour(){
 		Date to = new Date();

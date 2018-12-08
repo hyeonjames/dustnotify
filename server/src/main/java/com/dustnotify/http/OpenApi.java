@@ -1,6 +1,7 @@
 package com.dustnotify.http;
 
 import java.io.IOException;
+import java.net.URLDecoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -17,10 +18,13 @@ import org.springframework.beans.factory.annotation.Value;
 
 import com.dustnotify.data.DailyStatInfo;
 import com.dustnotify.data.HourStatInfo;
+import com.dustnotify.data.Measure;
 import com.dustnotify.data.Station;
 import com.dustnotify.etc.QueryMap;
 import com.dustnotify.repos.DailyStatInfoRepos;
 import com.dustnotify.repos.HourStatInfoRepos;
+import com.dustnotify.repos.MeasureRepos;
+import com.dustnotify.repos.RegionRepos;
 import com.dustnotify.repos.StationRepos;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -36,16 +40,44 @@ public class OpenApi{
 
 	@Autowired
 	DailyStatInfoRepos dRepos;
-	
+	@Autowired
+	RegionRepos regionRepos;
 	@Autowired
 	StationRepos stationRepos;
+	@Autowired
+	MeasureRepos measureRepos;
+	public void getMeasure(Station station) throws Exception {
+		final String url = "http://openapi.airkorea.or.kr/openapi/services/rest/ArpltnInforInqireSvc/getMsrstnAcctoRltmMesureDnsty";
+		QueryMap q = new QueryMap();
+		q.set("numOfRows", 24)
+		.set("pageNo", 1)
+		.set("dataTerm", "DAILY")
+		.set("stationName",station.getStationName());
+		ObjectMapper mapper = new ObjectMapper();
+		List<Measure> list = getData(url, q, (d)->{
+			Measure m;
+			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+			Date dt = df.parse(d.get("dataTime").asText());
+			m = measureRepos.findByStationAndDate(station, dt);
+			if(m == null) {
+				try {
+					m = mapper.treeToValue(d, Measure.class);
+				} catch(Exception e){
+					return null;
+				}
+				m.setDate(dt);
+				m.setStation(station);
+				measureRepos.save(m);
+			}
+			return m;
+		});
+	}
+
 	public void getStationData() throws IOException {
 		final String url = "http://openapi.airkorea.or.kr/openapi/services/rest/MsrstnInfoInqireSvc/getMsrstnList";
 		QueryMap q = new QueryMap();
 		q.set("numOfRows", 999)
-		.set("pageNo", 1)
-		.set("serviceKey", serviceKey)
-		.set("_returnType", "json");
+		.set("pageNo", 1);
 		ObjectMapper mapper = new ObjectMapper();
 		List<Station> stat = getData(url, q, (d)->{
 			Station st;
@@ -55,7 +87,10 @@ public class OpenApi{
 				st = stationRepos.findByStationName(stationName);
 				if(st == null) {
 					st = mapper.treeToValue(d, Station.class);
+					String addr = d.get("addr").asText();
+					st.setRegion(regionRepos.getByAddr(addr));
 				} else {
+					//System.out.println(stationName + " DUPLICATE");
 					return st;
 				}
 			} catch (JsonProcessingException e) {
@@ -68,7 +103,7 @@ public class OpenApi{
 				
 				stationRepos.save(st);
 			} catch(Exception e) {
-				
+				System.out.println(st);
 			}
 			return st;
 		});
@@ -78,6 +113,8 @@ public class OpenApi{
 		ArrayList<T> list = new ArrayList<T>();
 		ObjectMapper mapper = new ObjectMapper();
 		
+		q.set("serviceKey",URLDecoder.decode(serviceKey))
+		.set("_returnType","json");
 		String json = con.get(url, q);
 		JsonNode nd = mapper.readTree(json);
 		JsonNode l = nd.get("list");
@@ -97,12 +134,11 @@ public class OpenApi{
 	HourStatInfoRepos hRepos;
 	public void getHourStat(String itemCode, int numRows) throws Exception {
 		String url = "http://openapi.airkorea.or.kr/openapi/services/rest/ArpltnInforInqireSvc/getCtprvnMesureLIst";
-		QueryMap q = new QueryMap().set("serviceKey", serviceKey)
+		QueryMap q = new QueryMap()
 		.set("numOfRows", numRows)
 		.set("itemCode", itemCode)
 		.set("dataGubun", "HOUR")
-		.set("searchCondition", "MONTH")
-		.set("_returnType", "json");
+		.set("searchCondition", "MONTH");
 		ObjectMapper mapper = new ObjectMapper();
 		List<HourStatInfo> list = getData(url, q, (nd)->{
 			HourStatInfo di;
@@ -127,12 +163,11 @@ public class OpenApi{
 	public void getDailyStat(String itemCode, int numRows) throws Exception {
 		//http://openapi.airkorea.or.kr/openapi/services/rest/ArpltnInforInqireSvc/getCtprvnMesureLIst
 		String url = "http://openapi.airkorea.or.kr/openapi/services/rest/ArpltnInforInqireSvc/getCtprvnMesureLIst";
-		QueryMap q = new QueryMap().set("serviceKey", serviceKey)
+		QueryMap q = new QueryMap()
 		.set("numOfRows", numRows)
 		.set("itemCode", itemCode)
 		.set("dataGubun", "DAILY")
-		.set("searchCondition", "MONTH")
-		.set("_returnType", "json");
+		.set("searchCondition", "MONTH");
 		ObjectMapper mapper = new ObjectMapper();
 		List<DailyStatInfo> list = getData(url, q, (nd)->{
 			DailyStatInfo di;

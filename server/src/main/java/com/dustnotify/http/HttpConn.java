@@ -23,7 +23,7 @@ public class HttpConn {
 	    try {
 	    	StringBuilder ub = new StringBuilder();
 	    	for(String key : param.keySet()) {
-	    		String obj = URLEncoder.encode(URLDecoder.decode(param.get(key).toString()));
+	    		String obj = URLEncoder.encode((param.get(key).toString()), "UTF-8");
 	    		ub.append("&");
 	    		ub.append(key);
 	    		ub.append("=");

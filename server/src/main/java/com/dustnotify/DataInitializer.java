@@ -20,12 +20,8 @@ public class DataInitializer implements CommandLineRunner{
 	@Override
 	public void run(String... args) throws Exception {
 		// TODO Auto-generated method stub
-		if(ddlAuto.equals("create") || ddlAuto.equals("create-drop")) {
-			// 초기 데이터 받아옴
-			//log.debug("초기 데이터 생성 시작");
-			
-			api.getStationData();
-		}
+		
+		api.getStationData();
 	}
 
 }

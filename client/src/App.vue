@@ -1,8 +1,9 @@
 <template>
   <div id="app">
     <h2>시도별 미세먼지 데이터</h2>
-    <korea-map v-bind:dust="today"/>
+    <korea-map v-model="selected" v-bind:dust="today"/>
     <line-chart/>
+    <station-list region="11"/>
   </div>
 </template>
 
@@ -11,17 +12,20 @@
 import com from './com.js'
 import LineChart from './components/LineChart.vue'
 import KoreaMap from './components/KoreaMap.vue'
+import StationList from './components/StationList.vue'
 export default {
   name: 'app',
   components: {
     LineChart,
-    KoreaMap
+    KoreaMap,
+    StationList
   },
   data() {
     return {
       daily : [],
       dailyDict : {},
-      today : {}
+      today : {}, 
+      selected : ['seoul']
     }
   },
   created() {

@@ -22,14 +22,12 @@ export default {
                 width : 400,
                 height : 560
             },
-            selected : null,
             curRegion : null,
             regionCodeDict : {},
             card : { visible : false }
         }
     },
     created() {
-        this.selected = this.value;
         com.get('api/region/list').then((r)=>{
             for(var index in r) {
                 let c = r[index];
@@ -40,14 +38,10 @@ export default {
     },
     watch :{
         'value'(){
-            this.selected = this.value;
+            this.paint();
         },
         'dust'(){
             this.paint();
-        },
-        'selected' () {
-            this.paint();
-            this.$emit('change', this.selected);
         },
         'curRegion' (){
             this.paint();
@@ -96,7 +90,7 @@ export default {
                 .on('click' ,function (e){
                     console.log(e);
                     if(e.properties) {
-                        self.selected = e.properties.code;
+                        self.clicked(e.properties.name_eng);
                     }
                 })
                 .on('mouseover', function (e){
@@ -111,23 +105,19 @@ export default {
 
                 });
                 this.paint();
-                /*
-            map.selectAll('text')
-                .data(nation).enter()
-                .append('text')
-                .attr('transform', function (d){
-                    return 'translate(' + path.centroid(d) + ')';
-                })
-                .attr("dx", -10)
-                .attr("dy", ".35em")
-                .attr('fill','black')
-                .text((function(){
-                    return 'ddd'
-                }))*/
             
         });
     },
     methods : {
+        clicked(e) {
+            let index = this.value.indexOf(e);
+            if(index >= 0) {
+                this.value.splice(index,1);
+            } else{
+                this.value.push(e);
+            }
+            this.$emit('input', this.value);
+        },
         getIndex( val) {
             const r = [
                 {min: 0, max: 15, color : 'blue', alias : '양호'},
@@ -146,11 +136,11 @@ export default {
             if(!e.properties) {
                 return 'lightgreen';
             }
-            if(e.properties.code == this.selected) {
+            if(this.value.indexOf(e.properties.name_eng) >= 0) {
                 return 'gray';
             }
             if(e.properties.code == this.curRegion) {
-                return 'lightgray'
+                return 'lightgray';
             }
             var region = this.regionCodeDict [e.properties.code];
             if(!region) {

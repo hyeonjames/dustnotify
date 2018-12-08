@@ -68,7 +68,7 @@
                                 { text:"전북", value: "jeonbuk" },
                                 { text:"전남", value: "jeonnam" },
                                 { text:"경북", value: "gyeongbuk" },
-                                { text:"경남", value: "gueongnam" },
+                                { text:"경남", value: "gyeongnam" },
                                 { text:"제주", value: "jeju" },
                                 { text:"세종", value: "sejong"}        
                             ];

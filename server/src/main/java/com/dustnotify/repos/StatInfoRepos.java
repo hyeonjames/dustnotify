@@ -17,4 +17,5 @@ public interface StatInfoRepos<T extends StatisticInfo> extends JpaRepository<T,
 
 	@Query("SELECT s FROM #{#entityName} s WHERE s.date >= ?1 AND s.date <= ?2 ORDER BY s.date ASC")
 	List<T> list(Date from, Date to);
+
 }

@@ -1,4 +1,4 @@
-CREATE DATABASE dustnotify;
+CREATE DATABASE dustnotify DEFAULT CHARACTER SET utf8mb4;
  
 USE dustnotify;
 

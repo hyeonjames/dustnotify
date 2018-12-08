@@ -16,6 +16,7 @@ if os.system('gradlew build') == 1:
     print('gradle build failed.')
     exit(1)
 os.chdir('../')
+shutil.rmtree('httpd/dist')
 shutil.copyfile('server/build/libs/api.war' , 'tomcat/api.war')
 shutil.copytree('client/dist', 'httpd/dist')
 

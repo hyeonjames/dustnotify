@@ -8,5 +8,5 @@ import org.springframework.data.jpa.repository.Query;
 import com.dustnotify.data.DailyStatInfo;
 
 public interface DailyStatInfoRepos extends StatInfoRepos<DailyStatInfo>{
-	
+    
 }

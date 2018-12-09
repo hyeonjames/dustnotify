@@ -21,7 +21,8 @@ if os.system('gradlew build') == 1:
 os.chdir('../')
 
 print('서버 및 클라이언트 옴기는 중')
-shutil.rmtree('httpd/dist')
+if os.path.exists('httpd/dist'):
+    shutil.rmtree('httpd/dist')
 shutil.copyfile('server/build/libs/api.war' , 'tomcat/api.war')
 shutil.copytree('client/dist', 'httpd/dist')
 

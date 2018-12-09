@@ -4,23 +4,23 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import com.dustnotify.data.DailyStatInfo;
+import com.dustnotify.data.HourStatInfo;
+import com.dustnotify.http.OpenApi;
+import com.dustnotify.repos.DailyStatInfoRepos;
+import com.dustnotify.repos.HourStatInfoRepos;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.dustnotify.data.DailyStatInfo;
-import com.dustnotify.data.HourStatInfo;
-import com.dustnotify.data.StatisticInfo;
-import com.dustnotify.http.OpenApi;
-import com.dustnotify.repos.DailyStatInfoRepos;
-import com.dustnotify.repos.HourStatInfoRepos;
-
 @RestController
 @RequestMapping("stat")
 public class StatController {
-	
-	@Autowired OpenApi api;
+
+	@Autowired
+	OpenApi api;
 	
 	@Autowired DailyStatInfoRepos dRepos;
 	@Autowired HourStatInfoRepos hRepos;

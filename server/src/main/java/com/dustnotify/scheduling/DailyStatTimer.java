@@ -1,23 +1,21 @@
 package com.dustnotify.scheduling;
 
-import java.io.IOException;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.annotation.PostConstruct;
 
+import com.dustnotify.http.OpenApi;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StopWatch;
 
-import com.dustnotify.http.OpenApi;
-
 @Component
 public class DailyStatTimer {
-	
+
 	private AtomicInteger loopCounter = new AtomicInteger();
-	
+
 	private StopWatch watch = new StopWatch();
 	
 	@PostConstruct

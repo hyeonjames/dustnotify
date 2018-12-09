@@ -4,13 +4,12 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.annotation.PostConstruct;
 
+import com.dustnotify.http.OpenApi;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StopWatch;
-
-import com.dustnotify.http.OpenApi;
 
 @Component
 public class HourStatTimer {

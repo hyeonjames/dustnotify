@@ -5,11 +5,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.HashMap;
-
-import org.springframework.web.util.UriBuilder;
 
 public class HttpConn {
 	public String get(String targetUrl, HashMap<String,Object> param) {

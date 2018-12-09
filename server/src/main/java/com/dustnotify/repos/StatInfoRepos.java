@@ -3,15 +3,13 @@ package com.dustnotify.repos;
 import java.util.Date;
 import java.util.List;
 
+import com.dustnotify.data.StatisticInfo;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import com.dustnotify.data.DailyStatInfo;
-import com.dustnotify.data.StatisticInfo;
-
-public interface StatInfoRepos<T extends StatisticInfo> extends JpaRepository<T, Long>{
-	@Query("SELECT (CASE WHEN COUNT(u.date) > 0 THEN TRUE ELSE FALSE END) "
-			+ "FROM #{#entityName} u "
+public interface StatInfoRepos<T extends StatisticInfo> extends JpaRepository<T, Long> {
+	@Query("SELECT (CASE WHEN COUNT(u.date) > 0 THEN TRUE ELSE FALSE END) " + "FROM #{#entityName} u "
 			+ "WHERE u.date = ?1")
 	public boolean existByDate(Date date);
 

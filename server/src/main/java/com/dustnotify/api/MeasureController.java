@@ -1,18 +1,10 @@
 package com.dustnotify.api;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-
-import com.dustnotify.data.Measure;
-import com.dustnotify.data.Station;
 import com.dustnotify.http.OpenApi;
 import com.dustnotify.repos.MeasureRepos;
 import com.dustnotify.repos.StationRepos;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 

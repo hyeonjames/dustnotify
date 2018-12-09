@@ -17,7 +17,7 @@ os.chdir('../server')
 
 print('서버 빌드 시작')
 os.chdir('../server')
-if platform() == 'Windows':
+if platform().lower().find('windows') >= 0:
     res = os.system('gradlew build')
 else:
     res = os.system('sh ./gradlew build')

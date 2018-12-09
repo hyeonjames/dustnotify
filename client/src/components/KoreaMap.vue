@@ -19,7 +19,7 @@ export default {
     data(){
         return {
             svg : {
-                width : 400,
+                width : 530,
                 height : 560
             },
             curRegion : null,
@@ -63,7 +63,8 @@ export default {
             
         var svg = d3.select("svg")
         var projection = d3.geoMercator()
-            .center([126.9895, 37.5651])
+            //.center([126.9895, 37.5651])
+            .center([126, 37.8])
             .scale(4000)
             .translate([120,120]);
         var map = svg.append("g").attr("id", "map")
@@ -180,12 +181,17 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+    svg {
+        background-color: #cbeafc;
+    }
     .region-card {
         position:absolute;
-        background-color:yellowgreen;
-        border: 1px solid gray;
+        background-color:rgb(163, 185, 119);
+        border: 1px solid rgb(185, 185, 185);
         padding : 10px;
     }
-
+    svg .province {
+        stroke: #fff
+    }
 </style>

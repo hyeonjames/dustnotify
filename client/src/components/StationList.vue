@@ -28,7 +28,7 @@
 </template>
 
 <script>
-const countPerPage = 10;
+const countPerPage = 6;
 import com from '../com.js'
 export default {
     name : 'stationlist',
@@ -73,7 +73,4 @@ export default {
 </script>
 
 <style>
-    .station-list {
-        width:500px;
-    }
 </style>

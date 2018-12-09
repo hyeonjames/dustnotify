@@ -1,6 +1,6 @@
 <template>
     <div class="line-chart-viewer">
-        <h3> {{ msg }} </h3>
+        <h4> {{ cityNames() + '의 '+ msg }} </h4>
         <div id="chart"></div>  
     </div>
 
@@ -28,7 +28,7 @@
         'gyeongbuk' : '경북',
         'gyuongnam' : '경남',
         'jeju' : '제주',
-        'sejoung' : '세종'
+        'sejong' : '세종'
     };
 
     export default {
@@ -47,19 +47,22 @@
         },
         data: function() {
             return {
-                msg: {
-                    String,
-                    default: "ㅁㅁ"
-                },
+                msg: "ㅁㅁ",
 
             }
         },
         mounted() {
-            this.loadDaily();
+            this.updateChart();
         },
         methods: {
+            cityNames() {
+                let city = []
+                for(var i=0;i<this.city.length;i++) {
+                    city.push(regionDict[this.city[i]])
+                }
+                return city.join(',');
+            },
             loadDaily: function() {
-                this.state = 0; 
                 this.msg = "시간별 평균 미세먼지";
 
                 var col = [];
@@ -108,7 +111,6 @@
             },
             loadWeekly: function() {
                 this.msg = "일주일간 일별 평균 미세먼지"
-                this.state = 1;
                 var col = [];
                 var dates = ["dates"];
                 var columns_data = [];
@@ -147,30 +149,36 @@
                 });
             },
             loadMonthly: function() {
-                this.state = 2;
                 this.msg = "한달간 주별 평균 미세먼지"
                 var col = [];
                 var columns_data = [];
+                var x = [];
 
                 for(var i=0; i<this.city.length; i++) {
-                    col.push(regionDict[this.city[i]]);
+                    col.push([regionDict[this.city[i]]]);
                 }
                 
-                com.weekData().then ((data)=> {
+                com.daily().then ((data)=> {
                     data = com.weekData(data);
                     for(var i=0; i < data.length; i++) {
+                        x.push(`${data[i].month}월 ${data[i].week} 주차`);
                         for (var j=0; j < this.city.length; j++) {
                             var cityName = this.city[j];
                             col[j].push(data[i][cityName]);
                         }
                     }
 
-                    columns_data = columns_data.concat(col);
                     bb.generate({
                         bindto: "#chart",
                         data: {
-                            columns: columns_data
-                        }, type: "line"
+                            columns: col
+                        },
+                        axis : {
+                            x : {
+                                type : 'category',
+                                categories : x
+                            }
+                        }
                     })
                 });
             },
@@ -204,11 +212,11 @@
 
 <style scoped>
 h3 {
-    margin: 10px;
-    padding: 5px;
+    margin: 20px;
     font-size: x-large;
 }
 #chart {
-    margin: 7px;
+    margin: 5px;
+    padding: 5px;
 }
 </style>

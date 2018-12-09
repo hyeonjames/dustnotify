@@ -1,5 +1,5 @@
 <template>
-    <v-select ref="cityPicker" multiple v-model="selected" :options="arrayOfObjects" @input="updateSelected()" >
+    <v-select multiple v-model="selected" :options="arrayOfObjects" :on-change="updateSelected">
     </v-select>
 </template>
 
@@ -22,7 +22,7 @@ const regionDict = {
     'gyeongbuk' : '경북',
     'gyuongnam' : '경남',
     'jeju' : '제주',
-    'sejoung' : '세종'
+    'sejong' : '세종'
 };
 
 export default {
@@ -58,15 +58,9 @@ export default {
         }   
     },
     watch : {
-        'value' () {
-            var city = [];
-            for (var i = 0; i < this.value.length; i++) {
-                var cityObject = {
-                    label : regionDict[this.value[i]],
-                    value : this.value[i]};
-                city.push(cityObject);
-            }
-            this.selected = city;
+        'value' (from,to) {
+            if(JSON.stringify(from) != JSON.stringify(to))
+                this.updateValue();
         }
     },
     created: function() {
@@ -75,8 +69,19 @@ export default {
             // this.arrayOfObjects = Object.keys(data[0]);
             // this.arrayOfObjects.shift();
         // });
+        this.updateValue();
     },
     methods: {
+        updateValue() {
+            var city = [];
+            for (var i = 0; i < this.value.length; i++) {
+                var cityObject = {
+                    label : regionDict[this.value[i]],
+                    value : this.value[i]};
+                city.push(cityObject);
+            }
+            this.selected = city;
+        },
         updateSelected() {
             var city = [];
             for (var i = 0; i < this.selected.length; i++) {

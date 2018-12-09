@@ -2,26 +2,65 @@
   <div id="app">
     <h2>시도별 미세먼지 데이터</h2>
     <korea-map id="koreaMap" v-model="selected" v-bind:dust="today"/>
-    
-    <b-btn v-b-modal.modal1>선택시도측정소</b-btn>
-    <b-modal id="modal1" title="선택시도측정소">
-        <station-list region="11"/>
-    </b-modal>
-
-    <line-chart-viewer id="chartViewer" v-model="selected" />
+      <button type="button" class="btn btn-primary" @click="getStation">측정소 보기</button>
+        <selector id="vSelect" v-model="selected"/>
+        <button-group id="btnGroup" v-model="btnstate" />
+        <line-chart id="lineChart" :city="selected" :state="btnstate"/>
     <!-- <station-list region="11"/> -->
     
     <!-- <line-chart/> -->
+      <div class="modal fade" id="stationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel"> {{eng2kor[currentRegion]}}지역의 측정소</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <station-list :region="currentRegion"/>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+          
+            </div>
+          </div>
+        </div>
+      </div>
   </div>
 </template>
 
 <script>
 //import Map from './components/Map.vue'
 import com from './com.js'
+import $ from 'jquery'
 // import LineChart from './components/LineChart.vue'
 import KoreaMap from './components/KoreaMap.vue'
 import StationList from './components/StationList.vue'
-import LineChartViewer from './containers/LineChartViewer.vue'
+import Selector from './components/Selector.vue'
+import LineChart from './components/LineChart.vue'
+import ButtonGroup from './components/ButtonGroup.vue'
+
+    const eng2kor = {
+        'seoul' : '서울',
+        'busan' : '부산',
+        'daegu' : '대구',
+        'incheon' : '인천',
+        'gwangju': '광주',
+        'daejeon' : '대전',
+        'ulsan' : '울산',
+        'gyeonggi' : '경기',
+        'gangwon' : '강원',
+        'chungbuk' : '충북',
+        'chungnam' : '충남',
+        'jeonbuk'  :'전북',
+        'jeonnam' : '전남',
+        'gyeongbuk' : '경북',
+        'gyuongnam' : '경남',
+        'jeju' : '제주',
+        'sejoung' : '세종'
+    };
 // import LineChart from './components/LineChart.vue'
 
 /*
@@ -64,7 +103,9 @@ const regionDict = {
 export default {
   name: 'app',
   components: {
-    LineChartViewer,
+    LineChart,
+    Selector,
+    ButtonGroup,
     KoreaMap,
     StationList
   },
@@ -73,8 +114,11 @@ export default {
       daily : [],
       dailyDict : {},
       today : {}, 
+      btnstate : 0,
       selected : ['seoul'],
-      mycity : 'seoul'
+      currentRegion : '',
+      mycity : 'seoul',
+      eng2kor : eng2kor
     }
   },
   created() {
@@ -109,7 +153,21 @@ export default {
     }
   },
   methods : {
-    
+    getStation(){
+      if(this.selected.length > 1) {
+        alert('지역을 하나만 선택해 주세요.');
+        return;
+      }
+      if(this.selected.length == 0){
+        alert('지역을 선택해주세요.');
+        return;
+      }
+      this.currentRegion = this.selected[0];
+      $('#stationModal').modal({
+        show : true,
+        backdrop : 'static'
+      });
+    }
     
   }
 }

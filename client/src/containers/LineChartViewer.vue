@@ -1,8 +1,6 @@
 <template>
     <div>
-        <selector id="vSelect" v-model="selectedCity" @input="onchange()" :value="selectedCity"/>
-        <button-group id="btnGroup" v-model="btnstate" />
-        <line-chart id="lineChart" :city="selectedCity" :state="btnstate" @input="onChange()"/>
+        <selector id="vSelect" v-model="selected"/>
     </div>
 </template>
 

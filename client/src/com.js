@@ -1,4 +1,3 @@
-
 import $ from 'jquery'
 import q from 'q'
 import './dateformat.js'
@@ -19,14 +18,14 @@ let com = {
             if(week != prevWeek) {
                 r.push({
                     from : date.format('yyyy-mm-dd'),
-                    week : date.getWeekOfMonth(),
-                    month : date.getMonth()+1,
                     count : 0
                 });
             }
             var f = r[r.length-1];
             f.count = f.count+1;
-            f.to = date.format('yyyy-mm-dd')
+            f.to = date.format('yyyy-mm-dd');
+            f.week = date.getWeekOfMonth();
+            f.month = date.getMonth()+1;
             for(var j=0;j<cols.length;j++) {
                 f[cols[j]] = (f[cols[j]] || 0) + month[i][cols[j]];
             }

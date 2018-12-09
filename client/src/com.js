@@ -6,7 +6,8 @@ let host = ''
 let crossDomain = false
 let xhrFields = null
 const cols = ["seoul", "busan", "daegu", "incheon", "gwangju", "daejeon", "ulsan", "sejong", "gyeonggi", "gangwon", "chungbuk", "chungnam", "jeonbuk", "jeonnam", "gyeongbuk", "gyeongnam", "jeju"];
-
+let daily = null;
+let hour =null;
 let com = {
     weekData(month) {
         var prevWeek = -1;
@@ -38,6 +39,36 @@ let com = {
         }
         return r;
     },
+    daily (update = false) {
+        let p = q.defer();
+        if(!update && daily) {
+            p.resolve(daily);
+        } else {
+            com.get('api/stat/get/daily')
+            .then((r)=>{
+                daily = r;
+                p.resolve(r);
+            }, p.reject);
+
+        }
+        return p.promise;
+    },
+    hour (update = false) {
+        let p = q.defer();
+        if(!update && hour) {
+            p.resolve(hour);
+        } else {
+            com.get('api/stat/get/hour')
+            .then((r)=>{
+                hour = r;
+                p.resolve(r);
+            }, p.reject);
+
+        }
+        return p.promise;
+
+    },
+
     get (url) {
         let p = q.defer();
         $.ajax({

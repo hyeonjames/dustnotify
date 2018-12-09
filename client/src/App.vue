@@ -72,7 +72,7 @@ export default {
     }
   },
   created() {
-    com.get('api/stat/get/daily')
+    com.daily()
     .then ((r)=>{
       var d = {}
       for(var index in r){

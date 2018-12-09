@@ -20,7 +20,7 @@
 
 도커로 따로 구동할 필요 없이 docker-compose를 통해서 한번에 구동 가능합니다.
 
-( 프로젝트를 구동하기 위해서는 **docker** 와 **npm**, **python**이 있어야 합니다. )
+( 프로젝트를 구동하기 위해서는 **docker** , **docker-compose**, **npm**, **java** **python**이 있어야 합니다. )
 
 [도커 설치](https://www.docker.com/get-started)
 

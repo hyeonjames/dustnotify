@@ -1,9 +1,8 @@
 <template>
     <div>
-        <selector id="vSelect" v-model="selectedCity"/>
+        <selector id="vSelect" v-model="selectedCity" @input="onchange()" :value="selectedCity"/>
         <button-group id="btnGroup" v-model="btnstate" />
-        <line-chart id="lineChart" :city="selectedCity" :state="btnstate"/>
-        <p>{{ btnstate }}</p>
+        <line-chart id="lineChart" :city="selectedCity" :state="btnstate" @input="onChange()"/>
     </div>
 </template>
 
@@ -20,26 +19,17 @@ export default {
         LineChart,
         ButtonGroup
     },
-    props: {
-        dailyFile: {
-            String,
-            default: 'daily.json'
-        },
-        hourFile: {
-            String,
-            default: 'hour.json'
-        },
-        weekFile: {
-            String, 
-            default: 'week.json'
-        },
-    },
+    props: ['selectedCity', 'value'],
     data: function() {
         return {
-            selectedCity: ["busan", "gwangju", "jeju"],
             btnstate: 0
         }
-    }
+    },
+    methods: {
+        onchange() {
+            this.$emit('input', this.selectedCity);
+        }
+    },
 }
 </script>
 

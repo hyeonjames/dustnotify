@@ -11,6 +11,26 @@
     import $ from 'jquery'
     import com from '../com.js'
 
+    const regionDict = {
+        'seoul' : '서울',
+        'busan' : '부산',
+        'daegu' : '대구',
+        'incheon' : '인천',
+        'gwangju': '광주',
+        'daejeon' : '대전',
+        'ulsan' : '울산',
+        'gyeonggi' : '경기',
+        'gangwon' : '강원',
+        'chungbuk' : '충북',
+        'chungnam' : '충남',
+        'jeonbuk'  :'전북',
+        'jeonnam' : '전남',
+        'gyeongbuk' : '경북',
+        'gyuongnam' : '경남',
+        'jeju' : '제주',
+        'sejoung' : '세종'
+    };
+
     export default {
         name: 'LineChart',
         props: {
@@ -47,7 +67,7 @@
                 var columns_data = []; 
                 
                 for(var i=0; i<this.city.length; i++) {
-                    col.push(Array(this.city[i]));
+                    col.push(Array(regionDict[this.city[i]]));
                 }
 
                 // load json file
@@ -94,7 +114,7 @@
                 var columns_data = [];
 
                 for(var i=0; i<this.city.length; i++) {
-                    col.push(Array(this.city[i]));
+                    col.push(Array(regionDict[this.city[i]]));
                 }
                 
                 com.daily()
@@ -133,11 +153,11 @@
                 var columns_data = [];
 
                 for(var i=0; i<this.city.length; i++) {
-                    col.push(Array(this.city[i]));
+                    col.push(regionDict[this.city[i]]);
                 }
                 
-                com.daily().then ((daily)=> {
-                    data = com.weekData(daily);
+                com.weekData().then ((data)=> {
+                    data = com.weekData(data);
                     for(var i=0; i < data.length; i++) {
                         for (var j=0; j < this.city.length; j++) {
                             var cityName = this.city[j];
@@ -154,7 +174,7 @@
                     })
                 });
             },
-            drawChart: function() {
+            updateChart: function() {
                 switch (this.state) {
                     case 0:
                         this.loadDaily();
@@ -171,23 +191,14 @@
             }
 
         },
-        computed: {
-            updateChart() {
-                switch (this.state) {
-                    case 0:
-                        this.loadDaily();
-                        break;
-                    case 1:
-                        this.loadWeekly();
-                        break;
-                    case 2:
-                        this.loadMonthly();
-                        break;
-                    default:
-                        break;
-                }
+        watch : {
+            'state'() {
+                this.updateChart();
+            },
+            'city'() {
+                this.updateChart();
             }
-        }       
+        }    
     }
 </script>
 

@@ -1,10 +1,16 @@
 <template>
   <div id="app">
     <h2>시도별 미세먼지 데이터</h2>
-    <korea-map v-model="selected" v-bind:dust="today"/>
-    <line-chart/>
-    <station-list region="11"/>
-    <line-chart-viewer />
+    <korea-map id="koreaMap" v-model="selected" v-bind:dust="today"/>
+    
+    <b-btn v-b-modal.modal1>선택시도측정소</b-btn>
+    <b-modal id="modal1" title="선택시도측정소">
+        <station-list region="11"/>
+    </b-modal>
+
+    <line-chart-viewer id="chartViewer" v-model="selected" />
+    <!-- <station-list region="11"/> -->
+    
     <!-- <line-chart/> -->
   </div>
 </template>
@@ -12,7 +18,7 @@
 <script>
 //import Map from './components/Map.vue'
 import com from './com.js'
-import LineChart from './components/LineChart.vue'
+// import LineChart from './components/LineChart.vue'
 import KoreaMap from './components/KoreaMap.vue'
 import StationList from './components/StationList.vue'
 import LineChartViewer from './containers/LineChartViewer.vue'

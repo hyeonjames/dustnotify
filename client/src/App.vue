@@ -1,10 +1,7 @@
 <template>
   <div id="app">
     <h2>시도별 미세먼지 데이터</h2>
-<<<<<<< HEAD
-=======
     <korea-map v-model="selected" v-bind:dust="today"/>
->>>>>>> 444aed8cea44471dedb2c51e29d5e93798ea17eb
     <line-chart/>
     <station-list region="11"/>
   </div>

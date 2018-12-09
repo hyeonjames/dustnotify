@@ -13,6 +13,6 @@ public interface StationRepos extends JpaRepository<Station, Long>{
 	@Query("SELECT d FROM Station d WHERE d.region.regionCode = ?1")
 	List<Station> findByRegion(String regionCode);
 
-	@Query("SELECT COUNT(d) FROM Station d WHERE d.region.regionCode = ?1")
-	int countByRegion(String regionCode);
+	@Query("SELECT COUNT(d) FROM Station d WHERE d.region.regionEngName = ?1")
+	int countByRegion(String regionName);
 }

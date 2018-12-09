@@ -23,8 +23,8 @@ public class RegionController {
         return repos.findAll();
     }
 
-    @GetMapping("station/{regionCode}")
-    public List<Station> stationList(@PathVariable("regionCode")String code) {
-        return stationRepos.findByRegion(code);
+    @GetMapping("station/{regionName}")
+    public List<Station> stationList(@PathVariable("regionName")String name) {
+        return stationRepos.findByRegion(name);
     }
 }

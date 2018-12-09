@@ -2,8 +2,12 @@
 - docker : 서버 가상화 및 자동화
 - docker-compose : 다중 서버 가상화 및 자동화 ( docker-compose up으로 모든 서버 실행 )
     - httpd(Apache) : 정적 웹서버 구동.
+      - mod_jk로 tomcat서버와 연동합니다. 
+      - tomcat 서버의 호스트 이름은 TOMCAT_NAME 환경변수를 넘기면 됩니다. (docker-compose.yml 에서 설정)
     - tomcat : 동적 WAS 서버
-        - dockerize : MySQL 서버가 구동 될때까지 대기
+      - dockerize : MySQL 서버가 구동 될때까지 대기
+      - OPEN_API_KEY 는 [공공 데이터 포탈](https://www.data.go.kr/) 에서 받은 API키 입니다.
+        - [대기오염 정보 조회 서비스](https://www.data.go.kr/dataset/15000581/openapi.do) 와 [측정소 정보 조회 서비스](https://www.data.go.kr/dataset/15000660/openapi.do?mypageFlag=Y) 가 필요합니다.
     - mysql : 데이터 베이스 
 - Spring boot - JPA를 이용해 Mysql 서버에서 데이터를 액세스 하고 이를 클라이언트에게 전달하는 api서버 역할을 함
     - 미세먼지 데이터 오픈 Api : 우리나라 미세먼지 데이터 조회를 위해 사용됨. API키가 필요합니다. docker-compose.yml 에서 'OPEN_API_KEY' 환경 변수로 변경 가능.
@@ -15,6 +19,10 @@
     - billboard.js : 도시별로 미세먼지 정보를 주별/일별/시간별 평균을 조회할 수 있음
     - kakao map api( Daum 맵 api ) : Geolocation을 이용해 현재 사용자가 살고 있는 곳의 좌표를 가져오고 카카오 맵 api를 이용해 현재 도시를 알아냄 , API 키 필요 
 
+# 구성 환경 및 요구 사항 
+- Windows 10 Pro 에서 됨을 확인 했습니다. Windows 10 Home 버전 Docker-Toolbox를 쓴 버전에서는 잘 되지 않을 수 있습니다. 
+- Ubuntu 18.04에서 작동함을 확인 했습니다.
+- 램을 어느정도 먹기에 최소 램 2GB 이상의 시스템을 권장 합니다.
 
 # 빌드 및 설치
 
@@ -28,20 +36,27 @@
 
 [파이썬 설치](https://www.python.org)
 
+우분투 기준으로
+```
+$ curl -ssL get.docker.com | sh
+$ sudo apt-get update
+$ sudo apt-get install docker-compose nodejs npm default-jre python3
+```
+
 도커와 노드, 파이썬을 설치 했으면, 
 
-python setup.py로 설치를 바로 하실 수 있습니다.
+파이썬으로 setup.py를 실행하면 설치를 바로 하실 수 있습니다.
 
 기본적으로 80포트를 기준으로 서버가 열립니다. 
 
 이를 수정하시려면 docker-compose.yml 에 httpd>ports에 80:80을 원하는포트:80 으로 바꿔주세요.
 
-단, 포트를 바꾸면 kakao map api가 작동 안할 수 있습니다.
+단, 포트를 바꾸면 kakao map api가 작동 안할 수 있습니다. 
 
 설치 후에는 http://localhost 혹은 http://127.0.0.1 로만 접속해주세요. 
 
 ```
-$ python setup.py
+$ sudo python3 setup.py
 ```
 
 setup.py는 다음과 같은 작업을 합니다.
@@ -59,3 +74,7 @@ setup.py는 다음과 같은 작업을 합니다.
     - tomcat의 경우 tomcat 설치 및 api.war을 deploy, dockerize 설치
     - httpd 의 경우 apache2 설치 후 tomcat 연결을 위한 환경 설정 파일 적용
     - mysql 의 경우 mysql 설치 후 기본 인코딩 설정 변경 (custom.cnf), initial.sql 수행( 컨테이너 실행시 데이터가 하나도 없는 경우 수행 )
+
+
+# SERVER (Spring Boot)
+- Spring Boot v.2.1

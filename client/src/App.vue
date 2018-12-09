@@ -1,18 +1,21 @@
 <template>
   <div id="app">
     <h2>시도별 미세먼지 데이터</h2>
-    <line-chart/>
+    <line-chart-viewer />
+    <!-- <line-chart/> -->
   </div>
 </template>
 
 <script>
 //import Map from './components/Map.vue'
-import LineChart from './components/LineChart.vue'
+import LineChartViewer from './containers/LineChartViewer.vue'
+// import LineChart from './components/LineChart.vue'
 
 export default {
   name: 'app',
   components: {
-    LineChart
+    LineChartViewer
+    // LineChart
   }
 }
 </script>

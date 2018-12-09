@@ -18,7 +18,10 @@
     "popper.js": "^1.14.6",
     "q": "^1.5.1",
     "topojson": "^3.0.2",
-    "vue": "^2.5.17"
+    "vue": "^2.5.17",
+    "vue-browser-geolocation": "^1.5.0",
+    "vue-daum-map": "^1.0.12",
+    "vue-select": "^2.5.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.2.0",

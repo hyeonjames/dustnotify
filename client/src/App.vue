@@ -4,6 +4,8 @@
     <korea-map v-model="selected" v-bind:dust="today"/>
     <line-chart/>
     <station-list region="11"/>
+    <line-chart-viewer />
+    <!-- <line-chart/> -->
   </div>
 </template>
 
@@ -13,6 +15,9 @@ import com from './com.js'
 import LineChart from './components/LineChart.vue'
 import KoreaMap from './components/KoreaMap.vue'
 import StationList from './components/StationList.vue'
+import LineChartViewer from './containers/LineChartViewer.vue'
+// import LineChart from './components/LineChart.vue'
+
 /*
 { text:"서울", value: "seoul" },
                                 { text:"부산", value: "busan" },
@@ -53,7 +58,7 @@ const regionDict = {
 export default {
   name: 'app',
   components: {
-    LineChart,
+    LineChartViewer,
     KoreaMap,
     StationList
   },
@@ -98,6 +103,8 @@ export default {
     }
   },
   methods : {
+    
+    
   }
 }
 </script>

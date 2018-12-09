@@ -1,39 +1,14 @@
 <template>
     <div class="line-chart-viewer">
-        <!-- <selector v-bind:selected="city"/> -->
-
         <h4> {{ city +'의 '+ msg }} </h4>
-
-        <select id="city" v-model="city" @change="onChange()">
-            <option v-for="item in options" v-bind:key="item.key" v-bind:value="item.value">
-                {{ item.value }}
-            </option>
-        </select>
-
-        <div id="btngroup" class="btn-group btn-group-toggle" data-toggle="buttons">
-            <label class="btn btn-primary active" @click="loadDaily">
-                <input type="radio" name="options" id="option1" autocomplete="off" checked> 시간별
-            </label>
-            <label class="btn btn-primary" @click="loadWeekly">
-                <input type="radio" name="options" id="option2" autocomplete="off" > 일별
-            </label>
-            <label class="btn btn-primary" @click="loadMonthly">
-                <input type="radio" name="options" id="option3" autocomplete="off" > 주별
-            </label>
-        </div>
-
         <div id="chart"></div>  
     </div>
 
 </template>
 
 <script>
-    // import Selector from './components/Selector.vue'
-
     import { bb } from 'billboard.js'
     import $ from 'jquery'
-
-    var columns_data = ["data1", 30, 200, 100, 400, 150, 250];
     
     export default {
         name: 'LineChart',
@@ -46,72 +21,63 @@
                 String,
                 default: 'hour.json'
             },
-            city: {
-                String, 
-                default: 'seoul'
+            week: {
+                String,
+                default: 'week.json'
             },
-            options: {
+            city: {
                 Array,
                 default: function() {
-                    return [
-                                { text:"서울", value: "seoul" },
-                                { text:"부산", value: "busan" },
-                                { text:"대구", value: "daegu" },
-                                { text:"인천", value: "incheon" },
-                                { text:"광주", value: "gwangju" },
-                                { text:"대전", value: "daejeon" },
-                                { text:"울산", value: "ulsan" },
-                                { text:"경기", value: "gyeonggi" },
-                                { text:"강원", value: "gangwon"  },
-                                { text:"충북", value: "chungbuk"},
-                                { text:"충남", value: "chungnam"},
-                                { text:"전북", value: "jeonbuk" },
-                                { text:"전남", value: "jeonnam" },
-                                { text:"경북", value: "gyeongbuk" },
-                                { text:"경남", value: "gueongnam" },
-                                { text:"제주", value: "jeju" },
-                                { text:"세종", value: "sejong"}        
-                            ];
-                }        
+                    return Array();
+                } 
             },
-            
-        },
-        mounted() {    
-            this.loadDaily();
+            state: {
+                Number,
+                default: 0
+            },
         },
         data: function() {
             return {
-                columns_data,
-                state: 0,
                 msg: {
                     String,
                     default: "ㅁㅁ"
-                } 
+                },
+
             }
+        },
+        mounted() {
+            this.loadDaily();
         },
         methods: {
             loadDaily: function() {
+                this.state = 0; 
                 this.msg = "시간별 평균 미세먼지";
-                var col = ["시간별 평균 미세먼지" ];
-                var time = ["times"]; 
-                this.state = 0;             
+
+                var col = [];
+                var time = ["times"];
+                var columns_data = []; 
+                
+                for(var i=0; i<this.city.length; i++) {
+                    col.push(Array(this.city[i]));
+                }
+
                 // load json file
                 $.getJSON(this.hour, (data)=> {
-                    var i = 0;
-                    for(i=0;i < data.length;i++) {
-                        col.push(data[i][this.city]);
+                    for (var i=0; i < data.length; i++) {
                         time.push(new Date(data[i].date));
+                        for (var j=0; j < this.city.length; j++) {
+                            var cityName = this.city[j];
+                            col[j].push(data[i][cityName]);
+                        }
                     }
-                    this.columns_data = col;
-                    
+                    columns_data = Array(time);
+                    columns_data = columns_data.concat(col);
+                                        
                     bb.generate({
                         bindto: "#chart",
                         data: {
                             x: 'times',
-                            columns: [
-                                time,
-                                this.columns_data
-                            ]
+                            columns: columns_data
                         },
                         axis: {
                             x: {
@@ -120,31 +86,40 @@
                                     format: "%m-%d %H:%M"
                                 }
                             }
+                        },
+                        zoom: {
+                            enabled: true
                         }
-                    })
+                    });
                 });
             },
             loadWeekly: function() {
                 this.msg = "일주일간 일별 평균 미세먼지"
-                var col = ["일별 평균 미세먼지"];
-                var dates = ["dates"];
                 this.state = 1;
+                var col = [];
+                var dates = ["dates"];
+                var columns_data = [];
+
+                for(var i=0; i<this.city.length; i++) {
+                    col.push(Array(this.city[i]));
+                }
+                
                 $.getJSON(this.daily, (data) =>{
-                    var i = 0;
-                    for(i=0;i < 7;i++) {
-                        col.push(data[i][this.city]);
+                    for(var i=0;i < 7;i++) {
                         dates.push(new Date(data[i].date));
+                        for (var j=0; j < this.city.length; j++) {
+                            var cityName = this.city[j];
+                            col[j].push(data[i][cityName]);
+                        }                        
                     }
-                    this.columns_data = col;
-                    
+                    columns_data = Array(dates);
+                    columns_data = columns_data.concat(col);
+
                     bb.generate({
                         bindto: "#chart",
                         data: {
                             x: 'dates',
-                            columns: [
-                                dates,
-                                this.columns_data
-                            ]
+                            columns: columns_data
                         },
                         axis: {
                             x: {
@@ -158,37 +133,33 @@
                 });
             },
             loadMonthly: function() {
-                this.msg = "한달간 주별 평균 미세먼지"
-                var col = ["주별 평균 미세먼지"];
                 this.state = 2;
-                $.getJSON(this.daily, (data)=> {
-                    var i = 0, j = 0, sum = 0;
-                    for(i=0;i < data.length;i++) {
-                        if (j%7==0) {
-                            col.push(sum/7);
-                            sum = 0;
-                        } else {
-                            j++;
-                            sum += data[i][this.city];
+                this.msg = "한달간 주별 평균 미세먼지"
+                var col = [];
+                var columns_data = [];
+
+                for(var i=0; i<this.city.length; i++) {
+                    col.push(Array(this.city[i]));
+                }
+                
+                $.getJSON(this.week, (data)=> {
+                    for(var i=0; i < data.length; i++) {
+                        for (var j=0; j < this.city.length; j++) {
+                            var cityName = this.city[j];
+                            col[j].push(data[i][cityName]);
                         }
                     }
-                    this.columns_data = col;
-                    this.drawChart();
+
+                    columns_data = columns_data.concat(col);
+                    bb.generate({
+                        bindto: "#chart",
+                        data: {
+                            columns: columns_data
+                        }, type: "line"
+                    })
                 });
-                
             },
             drawChart: function() {
-                bb.generate({
-                    bindto: "#chart",
-                    data: {
-                        columns: [
-                            this.columns_data
-                        ],
-                        type: "line"
-                    },
-                });
-            },
-            onChange: function() {
                 switch (this.state) {
                     case 0:
                         this.loadDaily();
@@ -203,22 +174,33 @@
                         break;
                 }
             }
-             
+
+        },
+        computed: {
+            updateChart() {
+                switch (this.state) {
+                    case 0:
+                        this.loadDaily();
+                        break;
+                    case 1:
+                        this.loadWeekly();
+                        break;
+                    case 2:
+                        this.loadMonthly();
+                        break;
+                    default:
+                        break;
+                }
+            }
         }       
     }
 </script>
 
 <style scoped>
 h4 {
-    margin: 10px 0 10px;
-}
-#btngroup {
-    float: right;
-    margin: 0 5px 0
+    margin: 10px 10px 10px;
 }
 #chart {
     margin: 7px 7px 7px
 }
 </style>
-
-

@@ -5,7 +5,6 @@ services:
     build: mysql/.
     volumes:
       - ./mysql/logs:/var/log/mysql
-      - ./mysql/volumes:/var/lib/mysql
     expose:
       - "3306"
     ports:

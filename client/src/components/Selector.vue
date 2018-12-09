@@ -20,7 +20,7 @@ const regionDict = {
     'jeonbuk'  :'전북',
     'jeonnam' : '전남',
     'gyeongbuk' : '경북',
-    'gyuongnam' : '경남',
+    'gyeongnam' : '경남',
     'jeju' : '제주',
     'sejong' : '세종'
 };
@@ -50,7 +50,7 @@ export default {
                 { label:"전북", value: "jeonbuk" },
                 { label:"전남", value: "jeonnam" },
                 { label:"경북", value: "gyeongbuk" },
-                { label:"경남", value: "gueongnam" },
+                { label:"경남", value: "gyeongnam" },
                 { label:"제주", value: "jeju" },
                 { label:"세종", value: "sejong"}    
             ],

@@ -64,7 +64,7 @@ import ButtonGroup from './components/ButtonGroup.vue'
         'jeonbuk'  :'전북',
         'jeonnam' : '전남',
         'gyeongbuk' : '경북',
-        'gyuongnam' : '경남',
+        'gyeongnam' : '경남',
         'jeju' : '제주',
         'sejong' : '세종'
     };
@@ -103,7 +103,7 @@ const regionDict = {
     '전북'  :'jeonbuk',
     '전남' : 'jeonnam',
     '경북' : 'gyeongbuk',
-    '경남' : 'gyuongnam',
+    '경남' : 'gyeongnam',
     '제주' : 'jeju',
     '세종' : 'sejong'
 };

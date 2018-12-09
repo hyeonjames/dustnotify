@@ -4,7 +4,6 @@
 </template>
 
 <script>
-import $ from 'jquery'
 import vSelect from 'vue-select'
 const regionDict = {
     'seoul' : '서울',
@@ -60,7 +59,14 @@ export default {
     },
     watch : {
         'value' () {
-            
+            var city = [];
+            for (var i = 0; i < this.value.length; i++) {
+                var cityObject = {
+                    label : regionDict[this.value[i]],
+                    value : this.value[i]};
+                city.push(cityObject);
+            }
+            this.selected = city;
         }
     },
     created: function() {
@@ -78,7 +84,7 @@ export default {
             }
             this.$emit('input', city);
         }
-    }
+    },
 }
 </script>
 

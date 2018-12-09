@@ -109,14 +109,29 @@ export default {
         });
     },
     methods : {
+        // clicked(e) {
+        //     let index = this.value.indexOf(e);
+        //     if(index >= 0) {
+        //         this.value.splice(index,1);
+        //     } else{
+        //         this.value.push(e);
+        //     }
+        //     this.$emit('input', this.value);
+        // },
         clicked(e) {
-            let index = this.value.indexOf(e);
-            if(index >= 0) {
-                this.value.splice(index,1);
-            } else{
-                this.value.push(e);
+            let newValue = [];
+            let append = true;
+            for(var i=0;i<this.value.length;i++){
+                if(this.value[i] != e) {
+                    newValue.push(this.value[i]);
+                } else {
+                    append = false;
+                }
             }
-            this.$emit('input', this.value);
+            if(append) {
+                newValue.push(e);
+            }
+            this.$emit('input', newValue);
         },
         getIndex( val) {
             const r = [

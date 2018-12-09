@@ -31,3 +31,9 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+label {
+    padding: 10px;
+}
+</style>

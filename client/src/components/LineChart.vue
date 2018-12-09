@@ -1,6 +1,6 @@
 <template>
     <div class="line-chart-viewer">
-        <h4> {{ city +'의 '+ msg }} </h4>
+        <h3> {{ msg }} </h3>
         <div id="chart"></div>  
     </div>
 
@@ -203,10 +203,12 @@
 </script>
 
 <style scoped>
-h4 {
-    margin: 10px 10px 10px;
+h3 {
+    margin: 10px;
+    padding: 5px;
+    font-size: x-large;
 }
 #chart {
-    margin: 7px 7px 7px
+    margin: 7px;
 }
 </style>

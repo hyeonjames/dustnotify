@@ -1,14 +1,16 @@
 <template>
   <div id="app">
     <h2>시도별 미세먼지 데이터</h2>
-    <korea-map id="koreaMap" v-model="selected" v-bind:dust="today"/>
+    <div id="body">
+      <korea-map id="koreaMap" v-model="selected" v-bind:dust="today"/>
+      <line-chart-viewer id="chartViewer" v-model="selected" />
+    </div>
     
-    <b-btn v-b-modal.modal1>선택시도측정소</b-btn>
+    <!-- <b-btn v-b-modal.modal1>선택시도측정소</b-btn>
     <b-modal id="modal1" title="선택시도측정소">
         <station-list region="11"/>
-    </b-modal>
+    </b-modal> -->
 
-    <line-chart-viewer id="chartViewer" v-model="selected" />
     <!-- <station-list region="11"/> -->
     
     <!-- <line-chart/> -->
@@ -116,6 +118,10 @@ export default {
 </script>
 
 <style>
+h2 {
+  margin: 40px;
+  padding: 5px;
+}
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -123,5 +129,17 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+#chartViewer {
+  width: 50%;
+  float: right;
+}
+#koreaMap {
+  width: 50%;
+  float: left;
+}
+#body {
+  margin: 10px;
+  padding: 5px;
 }
 </style>

@@ -1,7 +1,9 @@
 <template>
     <div>
-        <selector id="vSelect" v-model="selectedCity" @input="onchange()" :value="selectedCity"/>
-        <button-group id="btnGroup" v-model="btnstate" />
+        <div>
+            <selector id="vSelect" v-model="selectedCity" @input="onchange()" :value="selectedCity"/>
+            <button-group id="btnGroup" v-model="btnstate" />
+        </div>
         <line-chart id="lineChart" :city="selectedCity" :state="btnstate" @input="onChange()"/>
     </div>
 </template>
@@ -36,14 +38,18 @@ export default {
 <style scoped>
 #vSelect {
     float: left;
-    width: 50%;
-    margin: 0 5px 0;
+    width: 60%;
+    margin: 5px;
 }
 #btnGroup {
     float: right;
-    margin: 5px 5px 5px;
+    margin: 5px;
+    padding: 1px;
+    height: 48px;
+    width: 30%;
 }
 #lineChart {
-    margin: 10px 0 10px;
+    margin: 10px;
+    clear: both;
 }
 </style>

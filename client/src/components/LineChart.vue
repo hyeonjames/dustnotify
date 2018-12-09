@@ -9,22 +9,11 @@
 <script>
     import { bb } from 'billboard.js'
     import $ from 'jquery'
-    
+    import com from '../com.js'
+
     export default {
         name: 'LineChart',
         props: {
-            daily: {
-                String,
-                default: 'daily.json' 
-            },
-            hour: {
-                String,
-                default: 'hour.json'
-            },
-            week: {
-                String,
-                default: 'week.json'
-            },
             city: {
                 Array,
                 default: function() {
@@ -62,13 +51,15 @@
                 }
 
                 // load json file
-                $.getJSON(this.hour, (data)=> {
-                    for (var i=0; i < data.length; i++) {
-                        time.push(new Date(data[i].date));
+
+                com.hour()
+                    .then((data)=> {
+                        for (var i=0; i < data.length; i++) {
+                            time.push(new Date(data[i].date));
                         for (var j=0; j < this.city.length; j++) {
                             var cityName = this.city[j];
                             col[j].push(data[i][cityName]);
-                        }
+                        }   
                     }
                     columns_data = Array(time);
                     columns_data = columns_data.concat(col);
@@ -91,7 +82,9 @@
                             enabled: true
                         }
                     });
-                });
+                    });
+                
+                
             },
             loadWeekly: function() {
                 this.msg = "일주일간 일별 평균 미세먼지"
@@ -104,7 +97,8 @@
                     col.push(Array(this.city[i]));
                 }
                 
-                $.getJSON(this.daily, (data) =>{
+                com.daily()
+                .then( (data) =>{
                     for(var i=0;i < 7;i++) {
                         dates.push(new Date(data[i].date));
                         for (var j=0; j < this.city.length; j++) {
@@ -142,7 +136,8 @@
                     col.push(Array(this.city[i]));
                 }
                 
-                $.getJSON(this.week, (data)=> {
+                com.daily().then ((daily)=> {
+                    data = com.weekData(daily);
                     for(var i=0; i < data.length; i++) {
                         for (var j=0; j < this.city.length; j++) {
                             var cityName = this.city[j];

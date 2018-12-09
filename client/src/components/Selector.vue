@@ -32,10 +32,6 @@ export default {
         vSelect
     },
     props: {
-        jsonFile: {
-            String,
-            default: 'hour.json'
-        },
         value: null       
     },
     data: function() {

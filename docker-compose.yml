@@ -1,7 +1,7 @@
 version: '2'
 services:
   db:
-    container_name: team5_mysql ## 수정시 톰캣 environment도 같이 수정
+    container_name: team5_mysql ## 
     build: mysql/.
     volumes:
       - ./mysql/logs:/var/log/mysql
@@ -14,7 +14,7 @@ services:
       - MYSQL_ROOT_PASSWORD=a1234567@
       - MYSQL_PORT=3306
   web:
-    container_name: team5_tomcat ## 수정시 httpd environment도 같이 수정
+    container_name: team5_tomcat ## 
     expose:
       - "8009"
     build: tomcat/.

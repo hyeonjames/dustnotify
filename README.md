@@ -1,6 +1,8 @@
 # 목차
 1. [바로 서버 구동하기](#serverUp)
+
 2. [사용 라이브러리 및 툴, 기타사항](#libAndEtc)
+
 
 #<a name="serverUp"></a> 바로 서버 구동 하기
 

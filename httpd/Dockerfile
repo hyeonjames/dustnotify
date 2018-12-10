@@ -1,7 +1,7 @@
 FROM httpd:2.4
 
 MAINTAINER tmdgus0118@gmail.com
-
+ENV TOMCAT_NAME team5_tomcat
 RUN apt-get update \
   && apt-get install -y --no-install-recommends libapache2-mod-jk
 

@@ -1,3 +1,4 @@
 logs/*
 /.metadata/
 .logs
+__pycache__/

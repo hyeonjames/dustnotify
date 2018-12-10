@@ -7,8 +7,8 @@ import shutil
 def build():
     os.chdir('client/')
     print('클라이언트 dependency 설치')
-    if os.system('npm update') != 0:
-        print("npm update failed. check if you've installed node package manager")
+    if os.system('npm install') != 0:
+        print("npm install failed. check if you've installed node package manager")
         exit(1)
 
     print('클라이언트 빌드 시작')

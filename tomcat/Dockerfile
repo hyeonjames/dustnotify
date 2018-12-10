@@ -2,6 +2,11 @@ FROM tomcat:8.5
 
 MAINTAINER tmdgus0118@gmail.com
 
+ENV OPEN_API_KEY Ik6zomYwmtDENJcCDgLVXlDTrXcjQ7JVm3EPLIQbPeO%2F%2B6W3h39mSASeNCRESjhUNp7jXLmVx5s7%2BkBMuSX5oQ%3D%3D
+ENV MYSQL_USER_NM ROOT
+ENV MYSQL_USER_PW a1234567@
+ENV MYSQL_NAME team5_mysql
+
 # add context to /usr/local/tomcat/webapps
 # COPY ./sample.war /usr/local/tomcat/webapps/sample.war
 ENV TZ 'Asia/Seoul'

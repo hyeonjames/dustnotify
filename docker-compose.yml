@@ -3,6 +3,7 @@ services:
   db:
     container_name: team5_mysql ## 
     build: mysql/.
+    image: hyeonjames/mysql
     volumes:
       - ./mysql/logs:/var/log/mysql
     expose:
@@ -15,6 +16,7 @@ services:
     expose:
       - "8009"
     build: tomcat/.
+    image: hyeonjames/tomcat
     environment:
       - OPEN_API_KEY=Ik6zomYwmtDENJcCDgLVXlDTrXcjQ7JVm3EPLIQbPeO%2F%2B6W3h39mSASeNCRESjhUNp7jXLmVx5s7%2BkBMuSX5oQ%3D%3D
       - MYSQL_NAME=team5_mysql
@@ -27,6 +29,7 @@ services:
     ports:
       - "80:80"
     build: httpd/.
+    image: hyeonjames/apache
     environment:
       - TOMCAT_NAME=team5_tomcat
     

@@ -5,3 +5,6 @@ ENV MYSQL_PORT 3306
 
 COPY initial.sql /docker-entrypoint-initdb.d/initial.sql
 ADD ./custom.cnf /etc/mysql/conf.d/custon.cnf
+
+EXPOSE ${MYSQL_PORT}
+

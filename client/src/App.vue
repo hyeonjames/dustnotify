@@ -191,7 +191,7 @@ export default {
 }
 #title {
   font-weight: bold;
-  margin: 0 0 40px;
+  margin: 0;
 }
 #body {
   width: 50%;
@@ -265,8 +265,8 @@ export default {
   margin-top: 3px;
 }
 #legend {
-  margin: 20px 50px 0;
-  padding: 10px 10px 0;
+  margin: 10px 0 0;
+  padding: 0;
 }
 .legend-element {
   display: inline-block;

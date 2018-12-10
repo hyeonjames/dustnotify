@@ -4,8 +4,6 @@ services:
     container_name: team5_mysql ## 
     build: mysql/.
     image: hyeonjames/mysql
-    volumes:
-      - ./mysql/logs:/var/log/mysql
     expose:
       - "3306"
     environment:
@@ -23,9 +21,7 @@ services:
       - MYSQL_USER_NM=root
       - MYSQL_USER_PW=a1234567@
   httpd:
-    container_name: sfw_httpd
-    volumes:
-      - ./httpd/logs:/var/log/apache2
+    container_name: team5_apache
     ports:
       - "80:80"
     build: httpd/.

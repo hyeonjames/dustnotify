@@ -8,13 +8,17 @@ NAME=dustdocker
 
 case "$1" in
     start)
-        sh $DUST_PATH/startup.sh
+        cd $DUST_PATH
+        sh startup.sh
+        ;;
     stop)
         cd $DUST_PATH
         docker-compose down
+        ;;
     restart)
         $0 stop
         $0 start
+        ;;
     *)
         echo "Usage {start|stop|restart}"
     exit 1

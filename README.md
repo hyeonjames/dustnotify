@@ -1,7 +1,9 @@
 # 목차
 1. [바로 서버 구동하기](#serverUp)
+2. [사용 라이브러리 및 툴, 기타사항](#libAndEtc)
 
-#<a name="serverUp"/> 바로 서버 구동 하기
+#<a name="serverUp"></a> 바로 서버 구동 하기
+
 - docker-compose로 바로 구동하기
 저희 팀은 docker-compose를 통해 자동화가 다 되어 있습니다. 
 손 쉽게 아래의 명령어를 docker-compose.yml이 있는 폴더에서 수행하면 바로 구동하실 수 있습니다.
@@ -21,7 +23,8 @@ $ sudo docker run --name was -e MYSQL_NAME=my_db --link db:my_db hyeonjames/tomc
 $ sudo docker run --name web -e TOMCAT_NAME=my_was --link was:my_was hyeonjames/apache:latest 
 ```
 
-#[](){:name='libAndEtc'} 사용 라이브러리 및 툴 기타 사항
+#<a name="libAndEtc"></a> 사용 라이브러리 및 툴 기타 사항
+
 - 과제 체크리스트
   - [x] docker 사용 - httpd(apache2), mysql, tomcat 폴더 내에 각각 Dockerfile 이 설정되어 있고 docker-compose로 빌드 및 구성
   - [x] Apache2 & Tomcat 연동 - Apache 이미지 생성할 때 mod_jk를 다운 받고 이를 적용해 톰켓과 연동을 자동으로 하게 설정함. ( **httpd /Dockerfile** )

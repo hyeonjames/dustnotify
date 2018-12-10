@@ -1,0 +1,24 @@
+#!/bin/sh
+#
+# start/stop dustdocker daemon
+#
+
+DUST_PATH=/home/ubuntu/Team5
+NAME=dustdocker
+
+case "$1" in
+    start)
+        sh $DUST_PATH/startup.sh
+    stop)
+        cd $DUST_PATH
+        docker-compose down
+    restart)
+        $0 stop
+        $0 start
+    *)
+        echo "Usage {start|stop|restart}"
+    exit 1
+    ;;
+esac
+
+exit 0

@@ -1,2 +1,3 @@
 logs/*
 /.metadata/
+.logs

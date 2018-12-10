@@ -136,7 +136,7 @@ export default {
         },
         getIndex( val) {
             const r = [
-                {min: 0, max: 15, color : 'blue', alias : '양호'},
+                {min: 0, max: 30, color : 'blue', alias : '양호'},
                 {min: 16, max: 35, color : 'green', alias : '보통'},
                 {min:36, max:75, color : 'yellow', alias : '나쁨'},
                 {min:76, max:500, color : 'red', alias : '매우나쁨'}

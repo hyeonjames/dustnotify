@@ -218,5 +218,6 @@ h3 {
 #chart {
     margin: 5px;
     padding: 5px;
+    min-height: 400px;
 }
 </style>

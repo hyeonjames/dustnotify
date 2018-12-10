@@ -93,6 +93,10 @@
                             x: 'times',
                             columns: columns_data
                         },
+                        size : {
+                            height: 500,
+                            width: this.width / 3
+                        },
                         axis: {
                             x: {
                                 type: "timeseries",
@@ -133,6 +137,10 @@
 
                     bb.generate({
                         bindto: "#chart",
+                        size : {
+                            height: 500,
+                            width: this.width / 3
+                        },
                         data: {
                             x: 'dates',
                             columns: columns_data
@@ -170,6 +178,10 @@
 
                     bb.generate({
                         bindto: "#chart",
+                        size : {
+                            height: 500,
+                            width: this.width / 3
+                        },
                         data: {
                             columns: col
                         },
@@ -217,7 +229,6 @@ h3 {
 }
 #chart {
     margin: 5px;
-    padding: 5px;
-    min-height: 400px;
+    padding: 5px 10% 0 0;
 }
 </style>

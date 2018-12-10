@@ -2,12 +2,22 @@
   <div id="app">
     <h2 id="title">시도별 미세먼지 데이터</h2>
     <div>
-      <korea-map id="koreaMap" v-model="selected" v-bind:dust="today"/>
+      <div id="koreaMap">
+        <korea-map  v-model="selected" v-bind:dust="today"/>
+        <div id="legend" class="alert alert-light" role= "alert">
+          <div class="legend-element"> <div id="blue"></div> <p>양호</p></div>
+          <div class="legend-element"> <div id="green"></div> <p>보통</p></div>
+          <div class="legend-element"> <div id="yellow"></div> <p>나쁨</p></div>
+          <div class="legend-element"> <div id="red"></div> <p>매우나쁨</p></div>
+          <div class="legend-element"> <div id="gray"></div> <p>선택</p></div>
+        </div>
+      </div>
       <div id="body">
         <div id="menu">
           <button id="stationBtn" type="button" class="btn btn-primary" @click="getStation">측정소 보기</button>
           <selector id="vSelect" v-model="selected"/>
           <button-group id="btnGroup" v-model="btnstate" />
+          <div id="dummy"/>
         </div>
         <line-chart id="lineChart" :city="selected" :state="btnstate"/>
       </div>
@@ -181,6 +191,7 @@ export default {
 }
 #title {
   font-weight: bold;
+  margin: 0 0 40px;
 }
 #body {
   width: 50%;
@@ -194,7 +205,8 @@ export default {
 }
 #lineChart {
   clear: both;
-  margin: 10px;
+  margin: 30px 0 0;
+  margin-right: 10%;
   padding: 5px;
 }
 #btnGroup {
@@ -212,6 +224,57 @@ export default {
   width: 50%;
   float: left;
   margin: 5px;
+}
+#dummy {
+  clear: both;
+  width: 48px;
+}
+#red {
+  background-color: red;
+  width: 10px;
+  height: 10px;
+  float: left;
+  margin-top: 3px;
+}
+#yellow {
+  background-color: yellow;
+  width: 10px;
+  height: 10px;
+  float: left;
+  margin-top: 3px;
+}
+#green {
+  background-color: green;
+  width: 10px;
+  height: 10px;
+  float: left;
+  margin-top: 3px;
+}
+#blue {
+  background-color: blue;
+  width: 10px;
+  height: 10px;
+  float: left;
+  margin-top: 3px;
+}
+#gray {
+  background-color: gray;
+  width: 10px;
+  height: 10px;
+  float: left;
+  margin-top: 3px;
+}
+#legend {
+  margin: 20px 50px 0;
+  padding: 10px 10px 0;
+}
+.legend-element {
+  display: inline-block;
+  text-align: center;
+  font-size: 12px;
+  margin: 0 20px 0;
+  align-content: center;
+  min-width: 12%;
 }
 /* button {
   height: 48px;

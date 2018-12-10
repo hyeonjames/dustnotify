@@ -1,9 +1,9 @@
 # 사용 라이브러리 및 툴 기타 사항
 - 과제 체크리스트
-  - [x] docker 사용 - httpd, mysql, tomcat 폴더 내에 각각 Dockerfile 이 생성되어 있고 docker-compose로 빌드 및 구성
-  - [x] Apache2 & Tomcat 연동 - httpd 이미지 생성할 때 mod_jk를 다운 받고 이를 적용해 톰켓과 연동함
+  - [x] docker 사용 - httpd(apache2), mysql, tomcat 폴더 내에 각각 Dockerfile 이 설정되어 있고 docker-compose로 빌드 및 구성
+  - [x] Apache2 & Tomcat 연동 - Apache 이미지 생성할 때 mod_jk를 다운 받고 이를 적용해 톰켓과 연동을 자동으로 하게 설정함. ( **httpd /Dockerfile** )
   - [x] MySQL 연동 - mysql 8버전 사용
-  - [x] Vue.js 사용
+  - [x] Vue.js 사용 - 클라이언트는 Vue 프로젝트로 되어 있음.
   - [x] Billboard.js 사용 - 차트 그리기
   - [x] D3.js 사용 - 대한민국 지도를 그릴때 사용
 
@@ -18,7 +18,8 @@
         - [대기오염 정보 조회 서비스](https://www.data.go.kr/dataset/15000581/openapi.do) 와 [측정소 정보 조회 서비스](https://www.data.go.kr/dataset/15000660/openapi.do?mypageFlag=Y) 가 필요합니다.
     - **mysql** : 데이터 베이스 
 - **Spring boot** - JPA를 이용해 **Mysql 서버에서 데이터를 액세스** 하고 이를 클라이언트에게 전달하는 api서버 역할을 함
-    - 미세먼지 데이터 오픈 Api : 우리나라 미세먼지 데이터 조회를 위해 사용됨. API키가 필요합니다. docker-compose.yml 에서 'OPEN_API_KEY' 환경 변수로 변경 가능.
+    - 미세먼지 데이터 오픈 Api : 우리나라 미세먼지 데이터 조회를 위해 사용됨. 
+    - API키가 필요합니다. docker-compose.yml 에서 'OPEN_API_KEY' 환경 변수로 변경 가능.
 
 - **Vue.js** : 클라이언트 단 처리 목적
     - vue-cli 유틸 : Vue 프로젝트를 자동으로 생성해주는 유틸.
@@ -29,7 +30,10 @@
 
 
 # 테스트 서버 ( 실행 가능한 URL )
-[여기](http://ec2-13-209-117-20.ap-northeast-2.compute.amazonaws.com) 에 접속하시면 됩니다.
+
+http://ec2-13-209-117-20.ap-northeast-2.compute.amazonaws.com
+
+에 접속하시면 됩니다.
 AWS 프리티어 (micro 서버)를 사용하고 있기에 원활하지 않을 수 있습니다.
 
 # 구성 환경 및 요구 사항 
@@ -38,11 +42,11 @@ AWS 프리티어 (micro 서버)를 사용하고 있기에 원활하지 않을 �
 - 서버는 램을 어느정도 먹기에 최소 램 2GB 이상의 시스템을 권장 합니다.
 - Chrome 에 최적화 되어 있습니다. d3 지도 맵 그리는게 조금 느릴 수 있음.
 
-# 빌드 및 설치
+# 프로젝트 빌드 및 구동
 
 도커로 따로 구동할 필요 없이 docker-compose를 통해서 한번에 구동 가능합니다.
 
-( 프로젝트를 구동하기 위해서는 **docker** , **docker-compose**, **npm**, **java** **python**이 있어야 합니다. )
+( 프로젝트를 빌드 하기 위해서는 **docker** , **docker-compose**, **npm**, **java** **python**이 있어야 합니다. )
 
 [도커 설치](https://www.docker.com/get-started)
 
@@ -74,23 +78,21 @@ $ sudo python3 setup.py
 
 setup.py는 다음과 같은 작업을 합니다.
 
-1. client 폴더에서 npm install로 클라이언트 dependency 패키지 설치
+1. client 폴더에서 npm update로 클라이언트 dependency 패키지 설치
 2. npm run build로 vue 프로젝트 빌드 -> client\dist 폴더에 빌드된 파일들이 생성됨
 3. server 폴더에서 gradlew build 수행 -> 서버 dependency 패키지 설치 및 war 생성
     - build\libs 에 api.war 생성
 4. docker 이미지 안으로 빌드된 파일들을 넣기 위해 복사함
-    - client\dist -> httpd\dist 로 복사됨
-    - server\build\libs\api.war -> tomcat\api.war로 복사됨
-5. docker-compose up --build 수행 ( 도커 이미지 생성 및 컨테이너 생성 )
-    - tomcat, mysql, httpd 3개의 컨테이너가 생성됨
+    - client\dist -> httpd\dist 로 복사됨 -> 이미지 생성시 /var/www/html로 복사됨
+    - server\build\libs\api.war -> tomcat\api.war로 복사됨 -> 이미지 생성시 톰캣 내 webapps/api.war로 복사됨
+5. docker-compose build 수행 ( 도커 이미지 생성 )
     - 각각 폴더에 있는 Dockerfile 을 기준으로 도커 이미지가 생성
-    - tomcat의 경우 tomcat 설치 및 api.war을 deploy, dockerize 설치
+    - tomcat의 경우 tomcat 설치 및 api.war을 deploy,  dockerize 설치
     - httpd 의 경우 apache2 설치 후 tomcat 연결을 위한 환경 설정 파일 적용
     - mysql 의 경우 mysql 설치 후 기본 인코딩 설정 변경 (custom.cnf), initial.sql 수행( 컨테이너 실행시 데이터가 하나도 없는 경우 수행 )
+6. docker-compose up 수행 ( 도커 컨테이너 생성 )
+    - tomcat, mysql, httpd 3개의 컨테이너가 생성됨
 
-
-# SERVER (Spring Boot)
-- Spring Boot v.2.1
 
 # 데몬 설정 ( 우분투 기준 )
 
@@ -113,6 +115,7 @@ dustdocker 파일안에 있는 DUST_PATH 값을 프로젝트 폴더로 바꿔주
 
 ```
 $ sudo update-rc.d dustdocker defaults
+$ sudo systemctl enable dustdocker
 ```
 
 아래처럼 service 명령어로 dustdocker를 start하면 서비스가 실행됩니다

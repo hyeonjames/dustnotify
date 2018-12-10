@@ -22,6 +22,7 @@
 # 바로 서버 구동 하기
 
 - docker-compose로 바로 구동하기
+
 저희 팀은 docker-compose를 통해 자동화가 다 되어 있습니다. 
 손 쉽게 아래의 명령어를 docker-compose.yml이 있는 폴더에서 수행하면 바로 구동하실 수 있습니다.
 ```

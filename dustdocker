@@ -1,5 +1,12 @@
 #!/bin/sh
-#
+### BEGIN INIT INFO
+# Provides:     DustNotify
+# Required-Start:   $all
+# Required-Stop:
+# Default-Start:    2 3 4 5
+# Default-Stop
+# Short-Description dust notify docker
+### END INIT INFO
 # start/stop dustdocker daemon
 #
 

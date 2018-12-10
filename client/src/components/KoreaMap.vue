@@ -191,6 +191,7 @@ export default {
         background-color:rgb(163, 185, 119);
         border: 1px solid rgb(185, 185, 185);
         padding : 10px;
+        z-index:100;
     }
     svg .province {
         stroke: #fff

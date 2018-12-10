@@ -1,4 +1,27 @@
-# 사용 라이브러리 및 툴 기타 사항
+# 목차
+1. [바로 서버 구동하기](#serverUp)
+
+#<a name="serverUp"/> 바로 서버 구동 하기
+- docker-compose로 바로 구동하기
+저희 팀은 docker-compose를 통해 자동화가 다 되어 있습니다. 
+손 쉽게 아래의 명령어를 docker-compose.yml이 있는 폴더에서 수행하면 바로 구동하실 수 있습니다.
+```
+$ sudo docker-compose pull
+$ sudo docker-compose up
+```
+
+- docker 따로 따로 구동하는 경우
+```
+$ sudo docker pull hyeonjames/mysql:latest
+$ sudo docker pull hyeonjames/tomcat:latest
+$ sudo docker pull hyeonjames/apache:latest
+
+$ sudo docker run --name db hyeonjames/mysql:latest
+$ sudo docker run --name was -e MYSQL_NAME=my_db --link db:my_db hyeonjames/tomcat:latest 
+$ sudo docker run --name web -e TOMCAT_NAME=my_was --link was:my_was hyeonjames/apache:latest 
+```
+
+#[](){:name='libAndEtc'} 사용 라이브러리 및 툴 기타 사항
 - 과제 체크리스트
   - [x] docker 사용 - httpd(apache2), mysql, tomcat 폴더 내에 각각 Dockerfile 이 설정되어 있고 docker-compose로 빌드 및 구성
   - [x] Apache2 & Tomcat 연동 - Apache 이미지 생성할 때 mod_jk를 다운 받고 이를 적용해 톰켓과 연동을 자동으로 하게 설정함. ( **httpd /Dockerfile** )
@@ -7,7 +30,10 @@
   - [x] Billboard.js 사용 - 차트 그리기
   - [x] D3.js 사용 - 대한민국 지도를 그릴때 사용
 
-- **docker** : 서버 가상화 및 자동화
+- python : 서버 빌드 자동화
+  - build.py 를 통해 모든 빌드를 자동으로 수행
+  - setup.py 를 통해 빌드 및 도커 컨테이너 수행
+- **docker** : 서버 가상화
 - docker-compose : 다중 서버 가상화 및 자동화 ( docker-compose up으로 모든 서버 실행 )
     - **httpd(Apache)** : 정적 웹서버 구동.
       - mod_jk로 **tomcat서버와 연동**합니다. 
@@ -42,11 +68,9 @@ AWS 프리티어 (micro 서버)를 사용하고 있기에 원활하지 않을 �
 - 서버는 램을 어느정도 먹기에 최소 램 2GB 이상의 시스템을 권장 합니다.
 - Chrome 에 최적화 되어 있습니다. d3 지도 맵 그리는게 조금 느릴 수 있음.
 
-# 프로젝트 빌드 및 구동
+# 프로젝트 빌드
 
-도커로 따로 구동할 필요 없이 docker-compose를 통해서 한번에 구동 가능합니다.
-
-( 프로젝트를 빌드 하기 위해서는 **docker** , **docker-compose**, **npm**, **java** **python**이 있어야 합니다. )
+프로젝트를 빌드 하기 위해서는 **docker** , **docker-compose**, **npm**, **java** **python**이 있어야 합니다.
 
 [도커 설치](https://www.docker.com/get-started)
 
@@ -123,3 +147,28 @@ $ sudo systemctl enable dustdocker
 ```
 $ sudo service dustdocker start
 ```
+
+
+## 실행 화면 및 기능
+![demo](https://github.com/puzzlepcs/Test/blob/master/screenshoot/demo.gif)
+접속 시 사용자의 해당 위치를 기반으로 정보를 불러옵니다.  
+지도에서 시도를 클릭하여 선택하거나 선 그래프 위의 셀렉트 바를 사용하여 원하는 시도를 선택하면 선택된 시도의 미세먼지 평균 데이터를 그래프로 볼 수 있습니다. (여러개의 시도를 선택 할 수 있습니다.)  
+
+
+화면은 지도, 선 그래프 크게 2가지로 구성되어 있습니다.  
+1. 지도
+  
+  지도는 실시간 미세먼지 정보를 불러와 농도별로 좋음, 양호, 나쁨, 매우나쁨을 색으로 표현해줍니다.
+  시도 위에 마우스를 올리면 실시간 미세먼지 정보를 불러와 줍니다.  
+  ![map](https://github.com/puzzlepcs/Test/blob/master/screenshoot/map01.gif)
+  
+2. 선그래프
+
+  선그래프는 선택된 도시에 대하여 오늘의 시간별 미세먼지 평균 데이터, 일주일간 일별 미세먼지 평균 데이터, 한달간 주별 미세먼지 평균 데이터를 보여줍니다.  
+    ![chart](https://github.com/puzzlepcs/Test/blob/master/screenshoot/chart01.gif)
+
+
+또한 하나의 시도를 선택 한 뒤, _측정소 보기_ 버튼을 클릭하면 각 시도의 미세먼지 측정소의 주소를 볼 수 있습니다.    
+해당 주소를 클릭하면 다음 카카오 지도페이지로 넘어갑니다.  
+
+![station](https://github.com/puzzlepcs/Test/blob/master/screenshoot/station01.gif)

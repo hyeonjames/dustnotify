@@ -1,4 +1,3 @@
-
 ## 실행 화면 및 기능
 ![demo](https://github.com/puzzlepcs/Test/blob/master/screenshoot/demo.gif)
 접속 시 사용자의 해당 위치를 기반으로 정보를 불러옵니다.  
@@ -21,4 +20,4 @@
 또한 하나의 시도를 선택 한 뒤, _측정소 보기_ 버튼을 클릭하면 각 시도의 미세먼지 측정소의 주소를 볼 수 있습니다.    
 해당 주소를 클릭하면 다음 카카오 지도페이지로 넘어갑니다.  
 
-![station](https://github.com/puzzlepcs/Test/blob/master/screenshoot/station01.gif
+![station](https://github.com/puzzlepcs/Test/blob/master/screenshoot/station01.gif)

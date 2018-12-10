@@ -30,7 +30,7 @@ public class DailyStatTimer {
 	public void tick() throws Exception {
 		watch.stop();
 		System.out.println("tick start");
-		api.getDailyStat("PM10", 30);
+		api.getDailyStat("PM25", 30);
 		watch.start("task-" + String.valueOf(loopCounter.getAndIncrement()));
 	}
 	

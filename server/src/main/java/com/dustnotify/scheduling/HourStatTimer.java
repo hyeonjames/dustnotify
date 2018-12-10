@@ -30,7 +30,7 @@ public class HourStatTimer {
 	public void tick() throws Exception {
 		watch.stop();
 		System.out.println("tick start");
-		api.getHourStat("PM10", 999);
+		api.getHourStat("PM25", 999);
 		watch.start("task-" + String.valueOf(loopCounter.getAndIncrement()));
 	}
 	

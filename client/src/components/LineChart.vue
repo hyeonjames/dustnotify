@@ -121,7 +121,7 @@
                 
                 com.daily()
                 .then( (data) =>{
-                    for(var i=0;i < 7;i++) {
+                    for(var i=date.length-1;i >= date.length-7;i--) {
                         dates.push(new Date(data[i].date));
                         for (var j=0; j < this.city.length; j++) {
                             var cityName = this.city[j];

@@ -7,6 +7,7 @@
 5. [프로젝트 빌드](#프로젝트-빌드)
 6. [데몬 설정](#데몬-설정)
 7. [실행 화면 및 기능](#실행-화면-및-기능)
+8. [폴더 및 파일 명세](#폴더-및-파일-명세)
 
 
 ## 빌드한 결과 및 소스 코드
@@ -14,6 +15,8 @@
 - [클라이언트 소스 코드](client/)
 - [서버 빌드 결과 (api.war)](build/api.war)
 - [클라이언트 빌드 결과](build/dist)
+
+
 
 
 # 바로 서버 구동 하기
@@ -186,3 +189,16 @@ $ sudo service dustdocker start
 해당 주소를 클릭하면 다음 카카오 지도페이지로 넘어갑니다.  
 
 ![station](screenshots/station01.gif)
+
+
+# 폴더 및 파일 명세
+- build (folder) : 클라이언트, 서버 각각 빌드한 결과물 (제출용)
+- client (folder) : 클라이언트 소스 폴더 (Vue Project)
+- httpd (folder) : Apache 2.4 설치와 톰켓을 연동하는 환경 설정을 자동으로 해주는 도커 이미지 빌드 설정 파일들 ([Dockerfile](httpd/Dockerfile) 참조) 
+- mysql (folder) : Mysql 8버전 설치와 초기 데이터 구성을 해주는 도커 이미지 빌드 설정 파일들 ([Dockerfile](mysql/Dockerfile) 참조)
+- server (folder) : 서버 소스 폴더 (Spring Boot)
+- tomcat (folder) : 톰켓 설치와 서버 빌드한 결과 Deploy를 자동으로 해주는 도커 이미지 빌드 설정 파일들 ([Dockerfile](tomcat/Dockerfile) 참조)
+- build.py : 모든 빌드 ( 클라이언트 빌드 , 서버 빌드, 도커 이미지 빌드 ) 해주는 파이썬 스크립트
+- setup.py : 모든 빌드 수행 후 docker 서버들 수행
+- startup.sh : 서버를 실행함 ( 모두 빌드한 상태에서 수행 )
+- dustdocker : 우분투 기준 데몬 스크립트 파일 [데몬 설정](#데몬-설정) 참조

@@ -118,8 +118,6 @@ export default {
   },
   data() {
     return {
-      daily : [],
-      dailyDict : {},
       today : {}, 
       btnstate : 0,
       selected : ['seoul'],
@@ -129,16 +127,8 @@ export default {
     }
   },
   created() {
-    com.daily()
+    com.hour()
     .then ((r)=>{
-      var d = {}
-      for(var index in r){
-        var e  = r[index]
-        
-        d[e.date.substring(0,10)] = e;
-      }
-      this.dailyDict = d;
-      this.daily = r;
       this.today = r[r.length-1];
     });
     if(navigator && navigator.geolocation) {
@@ -187,7 +177,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  margin-top: 20px;
 }
 #title {
   font-weight: bold;

@@ -121,7 +121,7 @@
                 
                 com.daily()
                 .then( (data) =>{
-                    for(var i=date.length-1;i >= date.length-7;i--) {
+                    for(var i=data.length-1;i >= data.length-7;i--) {
                         dates.push(new Date(data[i].date));
                         for (var j=0; j < this.city.length; j++) {
                             var cityName = this.city[j];
@@ -164,7 +164,7 @@
                         x.push(`${data[i].month}월 ${data[i].week} 주차`);
                         for (var j=0; j < this.city.length; j++) {
                             var cityName = this.city[j];
-                            col[j].push(data[i][cityName]);
+                            col[j].push((data[i][cityName]).toFixed(2));
                         }
                     }
 

@@ -1,5 +1,6 @@
 <template>
     <div>
+        <h6>실시간 미세먼지 정보<br/> {{dust.date}}</h6>
         <svg v-bind:width="svg.width" v-bind:height="svg.height"/>
         <div id="crd" class="region-card" v-show="card.visible">
             <h6>{{card.title}}</h6>
@@ -20,7 +21,7 @@ export default {
         return {
             svg : {
                 width : 530,
-                height : 560
+                height : 500
             },
             curRegion : null,
             regionCodeDict : {},
@@ -50,7 +51,7 @@ export default {
                 return;
             }
             var val = this.dust[reg.regionEngName];
-            if(!val) {
+            if(val == undefined || val == null) {
                 return;
             }
             this.card.title = reg.regionKorName;            
@@ -66,7 +67,7 @@ export default {
             //.center([126.9895, 37.5651])
             .center([126, 37.8])
             .scale(4000)
-            .translate([120,120]);
+            .translate([120,90]);
         var map = svg.append("g").attr("id", "map")
         var path = d3.geoPath().projection(projection);
         var self = this;
@@ -166,7 +167,7 @@ export default {
                 return 'lightgreen'
             }
             var o = this.dust[region.regionEngName];
-            if(!o) {
+            if(o == undefined || o == null) {
                 return 'lightgreen';
             }
             return this.getIndex(o).color;

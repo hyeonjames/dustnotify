@@ -7,8 +7,6 @@ services:
       - ./mysql/logs:/var/log/mysql
     expose:
       - "3306"
-    ports:
-      - "3307:3306"
     environment:
       - MYSQL_ROOT_PASSWORD=a1234567@
       - MYSQL_PORT=3306
